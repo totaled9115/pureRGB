@@ -23,7 +23,7 @@ DEF OPTION6_BIT EQU BIT_PIDGEOT_SPRITE
 SpritesOptionText:
 	db   "SPRITES 1"
 	next " BACK:   OG SW97"
-	next " ICONS:  OG OGplus"
+	next " ICONS:  OG OG+"
 	next " BULBASAUR:  RB RG"
 	next " SQUIRTLE:   RB RG"
 	next " BLASTOISE:  RB RG"
