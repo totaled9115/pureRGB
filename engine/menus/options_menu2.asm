@@ -322,7 +322,9 @@ CompareOptions2:
 	ld a, d
 	and %11
 	cp c
-	jp nz, RunDefaultPaletteCommand ; refresh palettes if we changed the palette setting on GBC
+	jr nz, PaletteChangeAction ; refresh palettes if we changed the palette setting on GBC
+
+.noPaletteFunc
 	bit BIT_BIKE_MUSIC, b
 	jr nz, .compareNonZero
 	bit BIT_BIKE_MUSIC, d
@@ -339,6 +341,18 @@ CompareOptions2:
 	cp 1
 	ret nz
 	jp PlayDefaultMusic ; reset music if we're on a bike and in-game
+
+PaletteChangeAction:
+	ldh a, [hGBC]
+	and a
+	jp nz, RunDefaultPaletteCommand
+	ld a, [wOnSGB]
+	and a
+	ret z
+	ld a, SFX_SWITCH
+	call PlaySound
+	jpfar ReloadSGB
+
 
 SetCursorPositionsFromOptions2:
 	ld hl, wOptions2

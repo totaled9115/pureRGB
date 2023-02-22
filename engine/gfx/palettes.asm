@@ -546,9 +546,10 @@ LoadSGB:
 	ld [wOnSGB], a
 .onDMG
 	ret	
-.onSGB
+.onSGB:
 	ld a, $1
 	ld [wOnSGB], a
+ReloadSGBPalettes:
 	di
 	call PrepareSuperNintendoVRAMTransfer
 	ei
@@ -574,6 +575,12 @@ LoadSGB:
 	call ClearVram
 	ld hl, MaskEnCancelPacket
 	jp SendSGBPacket
+
+ReloadSGB:
+	call ClearVram
+	call Delay3
+	jr ReloadSGBPalettes
+
 
 PrepareSuperNintendoVRAMTransfer:
 	ld hl, .packetPointers
