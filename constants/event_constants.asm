@@ -876,6 +876,11 @@ DEF INDIGO_PLATEAU_EVENTS_END EQU const_value - 1
 	const_skip 4
 	const EVENT_VICTORY_ROAD_1_BOULDER_ON_SWITCH
 
+	const_next 2336 ; $920
+DEF LEARNSET_FLAGS_START EQU const_value
+	const_next 2416 ; $970
+DEF LEARNSET_FLAGS_END EQU const_value
+
 ; Rock Tunnel events
 	const_next $9B0
 	const EVENT_DONATED_TO_POKECENTER_CHARITY
