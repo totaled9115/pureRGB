@@ -43,4 +43,6 @@ FadeOutAudio::
 	ld [wAudioROMBank], a
 	ld a, b
 	ld [wNewSoundID], a
-	jp PlaySound
+	rst _PlaySound
+	jp DefaultExtraMusicFadeComplete
+

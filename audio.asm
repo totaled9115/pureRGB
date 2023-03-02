@@ -370,13 +370,14 @@ INCLUDE "audio/fade_audio.asm"
 SECTION "Audio Engine 2", ROMX
 
 INCLUDE "audio/engine_2.asm"
-INCLUDE "audio/poke_flute.asm"
+INCLUDE "audio/play_arbitrary_music2.asm"
 
 
 SECTION "Audio Engine 3", ROMX
 
 INCLUDE "audio/pokedex_rating_sfx.asm"
 INCLUDE "audio/engine_3.asm"
+INCLUDE "audio/play_arbitrary_music3.asm"
 
 
 SECTION "Music 1", ROMX
@@ -449,3 +450,4 @@ INCLUDE "audio/music/surfing.asm"
 INCLUDE "audio/music/jigglypuffsong.asm"
 INCLUDE "audio/music/halloffame.asm"
 INCLUDE "audio/music/credits.asm"
+INCLUDE "audio/music/giovanni.asm"

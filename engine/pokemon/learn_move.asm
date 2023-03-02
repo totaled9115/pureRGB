@@ -238,7 +238,8 @@ OneTwoAndText:
 	jr .done
 .inBattlePoof
 	push bc
-	farcall Music_LearnMovePoofInBattle ; play in-battle poof sound the same way the pokeflute is played in battle
+	ld e, SFX_POOF_BATTLE
+	farcall PlayExtraSound2 ; play in-battle poof
 	pop bc
 .done
 	ld hl, PoofText

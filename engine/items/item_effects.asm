@@ -2061,7 +2061,8 @@ ItemUsePokeflute:
 	bit 7, a ; set if low health alarm sound is currently playing
 	jr nz, .skipMusic
 	call WaitForSoundToFinish ; wait for sound to end
-	farcall Music_PokeFluteInBattle ; play in-battle pokeflute music
+	ld e, SFX_POKEFLUTE_BATTLE
+	farcall PlayExtraSound2 ; play in-battle pokeflute music
 .musicWaitLoop ; wait for music to finish playing
 	ld a, [wChannelSoundIDs + CHAN7]
 	and a ; music off?

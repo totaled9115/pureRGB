@@ -74,9 +74,12 @@ wFrequencyModifier:: db
 wTempoModifier:: db
 
 UNION
+; unused audio wram 13 bytes
 	ds 13
 NEXTU
-	; unused audio wram 13 bytes
+wExtraSongID::db
+wLastExtraSongID::db
+; 11 bytes left
 ENDU
 
 

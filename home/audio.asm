@@ -64,7 +64,22 @@ PlayDefaultMusicCommon::
 	call CompareMapMusicBankWithCurrentBank
 	jr c, .next4
 
+
 .next3
+	ld a, [wExtraSongID]
+	and a ; is the song an extra song?
+	jr z, .noExtraSong ; if not check it like a normal song
+.compareExtraSong
+	push bc
+	ld b, a
+	ld a, [wLastExtraSongID]
+	cp b ; is the extra song same as one playing?
+	pop bc
+	jr nz, .next4
+	ret
+.noExtraSong
+	xor a
+	ld [wLastExtraSongID], a
 	ld a, [wLastMusicSoundID]
 	cp b ; is the default music already playing?
 	ret z ; if so, do nothing
@@ -76,7 +91,35 @@ PlayDefaultMusicCommon::
 	ld [wLastMusicSoundID], a
 	ld [wNewSoundID], a
 	rst _PlaySound
-	ret
+	ld a, [wAudioFadeOutControl]
+	and a ; has a fade-out length been specified?
+	ret nz
+	;fall through
+DefaultExtraMusicFadeComplete::
+	ld a, [wExtraSongID] ; has an extra song been specified to play
+	and a
+	ret z
+	ld [wLastExtraSongID], a
+	ld [wExtraSongID], a
+	ld e, a
+	ld a, [wAudioSavedROMBank]
+	ld d, a
+	; fall through
+ReplaceMusicWithExtra::
+	cp BANK(Audio2_PlaySound)
+	jr nz, .bank3
+	jpfar PlayArbitraryMusic2
+.bank3
+	jpfar PlayArbitraryMusic3
+
+; d = bank the music is in
+; e = extra song ID
+PlayExtraMusic::
+	ld a, e
+	ld c, d
+	call PlayMusic
+	ld a, d
+	jr ReplaceMusicWithExtra
 
 UpdateMusic6Times::
 ; This is called when entering a map, before fading out the current music and
@@ -99,7 +142,12 @@ CompareMapMusicBankWithCurrentBank::
 ; and updates the audio ROM bank variables.
 ; Returns whether the banks are different in carry.
 	ld a, [wMapMusicROMBank]
+	cp $fe
 	ld e, a
+	jr nc, .remapBank
+	xor a
+	ld [wExtraSongID], a
+.doneRemap
 	ld a, [wAudioROMBank]
 	cp e
 	jr nz, .differentBanks
@@ -120,6 +168,19 @@ CompareMapMusicBankWithCurrentBank::
 	ld [wAudioSavedROMBank], a
 	scf
 	ret
+.remapBank
+	cp $fe
+	ld e, BANK(Music_GymLeaderBattle)
+	ld b, MUSIC_GYM_LEADER_BATTLE
+	jr z, .skip
+	ld e, BANK(Music_CinnabarMansion)
+	ld b, MUSIC_CINNABAR_MANSION
+.skip
+	ld a, [wMapMusicSoundID]
+	ld [wExtraSongID], a
+	jr .doneRemap
+
+
 
 ; shinpokerednote: audionote: updated to match pokemon yellow's audio engine code
 PlayMusic::

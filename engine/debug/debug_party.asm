@@ -168,6 +168,7 @@ DebugItemsList:
 	db RARE_CANDY, 99
 	db MASTER_BALL, 99
 	db HYPER_BALL, 99
+	db POKE_FLUTE, 1
 	db SILPH_SCOPE, 1
 	db SECRET_KEY, 1
 	db CARD_KEY, 1
