@@ -182,6 +182,8 @@ INCLUDE "engine/battle/move_effects/check_defrost_move.asm" ; PureRGBnote: ADDED
 INCLUDE "engine/battle/move_effects/haze.asm" ; PureRGBnote: MOVED: moved from battle engine 1
 INCLUDE "engine/battle/decrement_pp.asm" ; PureRGBnote: MOVED: moved from battle engine 11
 INCLUDE "engine/battle/link_battle_versus_text.asm"
+INCLUDE "engine/battle/move_effects/heal.asm"
+INCLUDE "engine/battle/move_effects/teleport.asm"
 
 
 SECTION "Slot Machines", ROMX
@@ -235,7 +237,6 @@ INCLUDE "engine/battle/init_battle_variables.asm"
 INCLUDE "engine/battle/move_effects/paralyze.asm"
 INCLUDE "engine/battle/move_effects/burn.asm" ; PureRGBnote: ADDED: new burn effect code
 ; PureRGBnote: MOVED: moved from battle engine 7
-INCLUDE "engine/battle/move_effects/heal.asm"
 INCLUDE "engine/battle/move_effects/transform.asm"
 INCLUDE "engine/battle/move_effects/reflect_light_screen.asm"
 INCLUDE "engine/battle/move_effects/tri_attack.asm" ; PureRGBnote: ADDED: new tri attack effect code
@@ -410,6 +411,7 @@ INCLUDE "engine/pokemon/missingno_item_duplication.asm"
 INCLUDE "engine/gfx/set_attack_animation_palette.asm"
 INCLUDE "engine/battle/exp_bar_print.asm"
 INCLUDE "engine/overworld/strength.asm"
+INCLUDE "engine/overworld/surf_strength_tracker.asm"
 INCLUDE "engine/battle/store_pkmn_levels.asm"
 INCLUDE "engine/gfx/remap_overworld_sprites.asm"
 INCLUDE "engine/battle/animations/tri_attack.asm"
@@ -418,3 +420,4 @@ INCLUDE "engine/menus/multi_choice_menu.asm"
 INCLUDE "engine/menus/map_pokemon_areas.asm"
 INCLUDE "engine/gfx/save_screen_area_to_buffer3.asm"
 INCLUDE "engine/menus/change_box_menu.asm"
+INCLUDE "engine/overworld/autosurf.asm"
