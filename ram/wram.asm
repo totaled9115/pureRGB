@@ -463,6 +463,7 @@ wPlayerSubstituteHP:: db
 wEnemySubstituteHP:: db
 
 ; used for TestBattle (unused in non-debug builds)
+wGBCFadeCounter::
 wTestBattlePlayerSelectedMove:: db
 
 	ds 1

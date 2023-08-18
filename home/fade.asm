@@ -64,6 +64,9 @@ GBFadeIncCommon:
 	ret
 
 GBFadeOutToBlack::
+	ldh a, [hGBC]
+	and a
+	jr nz, GBCFadeOutToBlack
 	ld hl, FadePal4 + 2
 	ld b, 4
 	jr GBFadeDecCommon
@@ -89,6 +92,24 @@ GBFadeDecCommon:
 	dec b
 	jr nz, GBFadeDecCommon
 	ret
+
+GBCFadeOutToBlack:
+	ld a, 1
+	ld b, 11
+.loop
+	ld [wGBCFadeCounter], a
+	push af
+	push bc
+	call RunDefaultPaletteCommand
+	;rst _DelayFrame
+	pop bc
+	pop af
+	inc a
+	dec b
+	jr nz, .loop
+	xor a
+	ld [wGBCFadeCounter], a
+	jp Delay3
 
 FadePal1:: db %11111111, %11111111, %11111111
 FadePal2:: db %11111110, %11111110, %11111000

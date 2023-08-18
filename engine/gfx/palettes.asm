@@ -738,8 +738,10 @@ SendSGBPackets:
 	ldh a, [rLCDC]
 	and rLCDC_ENABLE_MASK
 	ret z
-	call Delay3
-	ret
+	ld a, [wGBCFadeCounter]
+	and a
+	ret nz
+	jp Delay3
 .notGBC
 	push de
 	call SendSGBPacket
@@ -883,11 +885,17 @@ color_index = 0
 		and %11	;"A" now has just the value for the shade of palette color 0
 		call .GetColorAddress
 		push de
-		;get the palett color value in de
+		;get the palette color value in de
 		ld a, [hli]
 		ld e, a
 		ld a, [hl]
 		ld d, a
+		; if we're doing a GBC fade animation, we need to adjust the palette color to fade lighter or darker here
+		push hl
+		push bc
+		call GBCFade
+		pop bc
+		pop hl
 		;now load the value that HL points to into wGBCPal offset by the loop
 		ld a, e
 		ld [wGBCPal + color_index * 2], a
@@ -1215,6 +1223,13 @@ TransferMonPal:
 .isMon	
 	call DeterminePaletteIDOutOfBattle
 	jr .back
+
+GBCFade:
+	ld a, [wGBCFadeCounter]
+	and a
+	ret z
+	; if it's greater than 1 we're doing a GBC fade
+	farjp _GBCFade
 
 
 
