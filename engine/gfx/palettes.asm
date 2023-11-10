@@ -220,6 +220,9 @@ SetPal_GameFreakIntro:
 ; PureRGBnote: CHANGED: abstracted code to a function called GetOverworldPalette for reusability.
 ; uses PalPacket_Empty to build a packet based on the current map
 SetPal_Overworld:
+	ld a, [wLastMap]
+	cp CELADON_CITY
+	jr z, .celadon
 	ld hl, PalPacket_Empty
 	ld de, wPalPacket
 	ld bc, $10
@@ -231,6 +234,17 @@ SetPal_Overworld:
 	ld a, SET_PAL_OVERWORLD
 	ld [wDefaultPaletteCommand], a
 	ret
+.celadon
+	ld hl, PalPacket_Celadon
+	ld de, wPalPacket
+	ld bc, $10
+	rst _CopyData
+	ld hl, PalPacket_Celadon
+	ld de, BlkPacket_Celadon
+	ld a, SET_PAL_OVERWORLD
+	ld [wDefaultPaletteCommand], a
+	ret
+
 
 ; PureRGBnote: CHANGED: abstracted into its own function, removed some redundant code
 ; stores the palette used  for the current map in a
