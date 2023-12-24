@@ -1,7 +1,6 @@
 ; poison vs bug -> 2x -> bug+grass -> 4x
 
-DEF CONVERT_GRASS_POISON    EQUS 251
-DEF CONVERT_NO_WEAKNESS     EQUS 252
+DEF CONVERT_GRASS_POISON    EQUS 252
 DEF CONVERT_TRI_GRASS       EQUS 253
 DEF CONVERT_TRI_BUG         EQUS 254
 DEF CONVERT_TRI_FLYING      EQUS 255
@@ -9,7 +8,7 @@ DEF CONVERT_TRI_FLYING      EQUS 255
 ; CONVERT: use tri attack when super effective
 
 ConversionAttackTable:
-	db SOLARBEAM             ; RHYDON
+	db MEGA_DRAIN            ; RHYDON
 	db DIZZY_PUNCH           ; KANGASKHAN         
 	db PSYCHIC               ; NIDORAN_M          
 	db DIZZY_PUNCH           ; CLEFAIRY           
@@ -26,7 +25,7 @@ ConversionAttackTable:
 	db PSYCHIC               ; NIDORAN_F          
 	db ICE_BEAM              ; NIDOQUEEN          
 	db ICE_BEAM              ; CUBONE             
-	db SOLARBEAM             ; RHYHORN            
+	db MEGA_DRAIN            ; RHYHORN            
 	db SOLARBEAM             ; LAPRAS             
 	db SURF                  ; ARCANINE           
 	db TWINEEDLE             ; MEW                
@@ -47,7 +46,7 @@ ConversionAttackTable:
 	db CONVERT_TRI_FLYING    ; PIDGEY             
 	db SOLARBEAM             ; SLOWPOKE           
 	db TWINEEDLE             ; KADABRA            
-	db RAZOR_LEAF            ; GRAVELER           
+	db MEGA_DRAIN            ; GRAVELER           
 	db DIZZY_PUNCH           ; CHANSEY            
 	db PSYCHIC_M             ; MACHOKE            
 	db BARRAGE               ; MR_MIME  ##Needs option remap  
@@ -57,7 +56,7 @@ ConversionAttackTable:
 	db CONVERT_TRI_BUG       ; PARASECT           
 	db SOLARBEAM             ; PSYDUCK            
 	db TWINEEDLE             ; DROWZEE            
-	db RAZOR_LEAF            ; GOLEM              
+	db MEGA_DRAIN            ; GOLEM              
 	db 0        
 	db SPIKE_CANNON          ; MAGMAR             
 	const_skip               ; $34
@@ -106,8 +105,8 @@ ConversionAttackTable:
 	const_skip               ; $5F
 	db SOLARBEAM             ; SANDSHREW          
 	db SOLARBEAM             ; SANDSLASH          
-	db SOLARBEAM             ; OMANYTE            
-	db SOLARBEAM             ; OMASTAR            
+	db MEGA_DRAIN            ; OMANYTE            
+	db MEGA_DRAIN            ; OMASTAR            
 	db DIZZY_PUNCH           ; JIGGLYPUFF         
 	db DIZZY_PUNCH           ; WIGGLYTUFF         
 	db DIZZY_PUNCH           ; EEVEE              
@@ -146,7 +145,7 @@ ConversionAttackTable:
 	const_skip               ; $87
 	db PSYCHIC_M             ; MUK                
 	const_skip               ; $89
-	db SOLARBEAM             ; KINGLER            
+	db MEGA_DRAIN            ; KINGLER            
 	db SOLARBEAM             ; CLOYSTER           
 	const_skip               ; $8C
 	db EARTHQUAKE            ; ELECTRODE          
@@ -177,7 +176,7 @@ ConversionAttackTable:
 	db DIZZY_PUNCH           ; RATICATE           
 	db PSYCHIC_M             ; NIDORINO           
 	db PSYCHIC_M             ; NIDORINA           
-	db SOLARBEAM             ; GEODUDE            
+	db MEGA_DRAIN            ; GEODUDE            
 	db DIZZY_PUNCH           ; PORYGON            
 	db THUNDERBOLT           ; AERODACTYL         
 	db RAZOR_LEAF            ; HARDENED_ONIX      
@@ -189,7 +188,7 @@ ConversionAttackTable:
 	db SURF                  ; CHARMELEON         
 	db SOLARBEAM             ; WARTORTLE          
 	db SPIKE_CANNON          ; CHARIZARD          
-	db CONVERT_NO_WEAKNESS   ; MISSINGNO           ; PureRGBnote: ADDED: real missingno
+	db 0   ; MISSINGNO           ; missingno needs custom behaviour
 	db 0             ; FOSSIL_KABUTOPS    
 	db 0             ; FOSSIL_AERODACTYL  
 	db 0             ; MON_GHOST          
@@ -200,9 +199,16 @@ ConversionAttackTable:
 	db CONVERT_GRASS_POISON  ; WEEPINBELL         
 	db ICE_BEAM              ; VICTREEBEL         
 
+; if magneton, use these moves instead of tri attack
 SecondaryConversion:
-	db 
+	db FLAMETHROWER ; CONVERT_TRI_GRASS
+	db FLAMETHROWER ; CONVERT_TRI_BUG
+	db THUNDERBOLT  ; CONVERT_TRI_FLYING
 
+; if CONVERT_GRASS_POISON, if bug SE against poison, choose LEECH_LIFE, otherwise choose DRILL_PECK if porygon, or FLAMETHROWER if magneton
+; if missingno, use TRI ATTACK if porygon, THUNDERBOLT if magneton
+; if ditto, and hasn't transformed yet, use earthquake with magneton, dizzy punch with porygon, if it has transformed, look up the pokemon it transformed into
+; if mr mime, and ghost is SE against psychic, use BARRAGE (default), otherwise use tri attack if porygon, thunderbolt if magneton
 
 ; for some pokemon if they have their original typings, we need to tweak what conversion will use
 ConversionTypeRemapTable:
