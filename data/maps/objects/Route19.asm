@@ -14,6 +14,8 @@ Route19_Object:
 	db $43 ; border block
 
 	def_warp_events
+	warp_event 13, 49, SEAFOAM_ISLANDS_1F, 1 ; TODO: use new map
+
 
 	def_bg_events
 	bg_event 11,  9, TEXT_ROUTE19_SIGN
