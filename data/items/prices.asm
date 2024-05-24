@@ -39,7 +39,7 @@ ItemPrices::
 	bcd3 5000  ; IRON
 	bcd3 5000  ; CARBOS
 	bcd3 5000  ; CALCIUM
-	bcd3 4000  ; RARE_CANDY
+	bcd3 1     ; RARE_CANDY
 	bcd3 0     ; DOME_FOSSIL
 	bcd3 0     ; HELIX_FOSSIL
 	bcd3 0     ; SECRET_KEY
