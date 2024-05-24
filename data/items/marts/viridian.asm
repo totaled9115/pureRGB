@@ -1,7 +1,7 @@
 
 ViridianMartClerkText::
 	script_mart \
-	POKE_BALL, \
+	MASTER_BALL, \
 	ANTIDOTE, \
 	PARLYZ_HEAL, \
-	BURN_HEAL
+	RARE_CANDY
